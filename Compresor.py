@@ -1,8 +1,8 @@
 from huffman import HuffmanCoding
 import time, sys
 
-path = "LaBiblia.txt"
-#path = sys.argv[1]
+#path = "sample2.txt"
+path = sys.argv[1]
 
 h = HuffmanCoding(path)
 

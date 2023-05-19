@@ -1,7 +1,9 @@
 from huffman import HuffmanCoding
 import time
+import sys
 
 path = "comprimido.elmejorprofesor"
+#path = sys.argv[1]
 
 h = HuffmanCoding(path)
 

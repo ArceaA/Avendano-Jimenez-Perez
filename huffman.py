@@ -106,6 +106,34 @@ class HuffmanCoding:
 			b.append(int(byte, 2))
 		return b
 
+	def compress_p(self, diccionario):
+		#filename, file_extension = os.path.splitext(self.path)
+		output_path = "comprimidop.elmejorprofesor"
+
+		with open(self.path, 'rb') as file, open(output_path, 'wb') as output:
+			text = file.read()
+			#text = text.rstrip()
+
+			#frequency = self.make_frequency_dict(text)
+			self.make_heap(diccionario)
+			self.merge_nodes()
+			self.make_codes()
+
+			encoded_text = self.get_encoded_text(text)
+			padded_encoded_text = self.pad_encoded_text(encoded_text)
+
+			b = self.get_byte_array(padded_encoded_text)
+   
+			dic_file = open('diccionariop.bin', 'wb')
+			pickle.dump(obj=self.reverse_mapping, file=dic_file)
+			#print(self.reverse_mapping)
+			dic_file.close()
+
+			output.write(bytes(b))
+			output.close()
+			file.close()
+
+		return output_path
 
 	def compress(self):
 		#filename, file_extension = os.path.splitext(self.path)
@@ -127,14 +155,13 @@ class HuffmanCoding:
    
 			dic_file = open('diccionario.bin', 'wb')
 			pickle.dump(obj=self.reverse_mapping, file=dic_file)
-			print(self.reverse_mapping)
+			#print(self.reverse_mapping)
 			dic_file.close()
 
 			output.write(bytes(b))
 			output.close()
 			file.close()
 
-		print("Compressed")
 		return output_path
 
 
@@ -155,10 +182,11 @@ class HuffmanCoding:
 		for key in self.reverse_mapping:
 			val = self.reverse_mapping[key]
 			dic[key] = val.to_bytes(1, 'big')
-		print(dic)
+		#print(dic)
 		self.reverse_mapping = dic
 
 	def decode_text(self, encoded_text):
+		#print(encoded_text)
 		current_code = ''
 		decoded_text = b''
 
@@ -180,8 +208,7 @@ class HuffmanCoding:
 		dic_file = open('diccionario.bin', 'rb')
 		self.reverse_mapping = pickle.load(file=dic_file)
 		dic_file.close()
-		print(self.reverse_mapping)
-		print(self.clean())
+		self.clean()
 
 		with open(input_path, 'rb') as file, open(output_path, 'wb') as output:
 			bit_string = ""
@@ -199,5 +226,30 @@ class HuffmanCoding:
 			
 			output.write(decompressed_text)
 
-		print("Decompressed")
+		return output_path
+	
+	def decompress_p(self, input_path=str, clean_dic=dict):
+		#filename, file_extension = os.path.splitext(self.path)
+		output_path = "descomprimidop-elmejorprofesor.txt"
+		self.reverse_mapping = clean_dic
+
+		# dic_file = open('diccionariop.bin', 'rb')
+		# self.reverse_mapping = pickle.load(file=dic_file)
+		# dic_file.close()
+		# self.clean()
+
+		with open(input_path, 'rb') as file, open(output_path, 'wb') as output:
+			bit_string = ""
+
+			byte = file.read(1)
+			while(len(byte) > 0):
+				byte = ord(byte)
+				bits = bin(byte)[2:].rjust(8, '0')
+				bit_string += bits
+				byte = file.read(1)
+    
+			encoded_text = self.remove_padding(bit_string)
+			decompressed_text = self.decode_text(encoded_text)
+			output.write(decompressed_text)
+
 		return output_path
