@@ -1,4 +1,5 @@
 # Huffman_project
 
-Sample contiene una seria de Lorem ipsum con los cuales el proceso no tiene problemas y la verificacion es exitosa.
-La biblia al ser en español, el decodificador toma los caracteres que no reconce y los hace uno mismo, por eso la verificacion no es exitosa
+Proyecto de compresor basado en el algoritmo de huffman. Los archivos compresor.py, compresorp.py, descompresor.py y descompresor.py cumplen con su cometido en tiempos objetivamente altos, pero se completa con exito el proceso de compresion y descompresion.
+
+-Se probo el archivo text1.txt con el que se demora al rededor de 20 minutos en ejecutar la prueba, con resultados satisfactorios.
