@@ -46,7 +46,7 @@ if rank == 0:
     h = HuffmanCoding(path)
     output_path = h.decompress_p(input_path=path, clean_dic=clean_dicc)
     ft = time.time()
-    print("Decompression time: " + str(round(ft-st, 5)) + "s")
+    print(ft-st)
 
 else:
     while(True):
