@@ -95,7 +95,7 @@ if rank == 0:
     h = HuffmanCoding(path)
     output_path = h.compress_p(global_dic)
     ft = time.time()
-    print("Compression time: " + str(round(ft-st, 5)) + "s")
+    print(ft-st)
 
 
 else:
